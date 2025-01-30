@@ -33,4 +33,14 @@ class FirebaseService {
       },
     ).toList();
   }
+
+  static Future<void> deleteEvents(Event event) async {
+    CollectionReference<Event> collectionReference = getEventsCollection();
+    await collectionReference.doc(event.id).delete();
+  }
+
+  static Future<void> updateEvents(Event event) async {
+    CollectionReference<Event> collectionReference = getEventsCollection();
+    await collectionReference.doc(event.id).update(event.toJson());
+  }
 }

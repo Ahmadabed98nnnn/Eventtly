@@ -1,10 +1,13 @@
 import 'package:evently/create_event_screen.dart';
+import 'package:evently/edit_or_remove.dart';
 import 'package:evently/nav_bar_icon.dart';
 import 'package:evently/tabs/Home/home_screen.dart';
 import 'package:evently/tabs/Love/love_screen.dart';
 import 'package:evently/tabs/Map/map_screen.dart';
 import 'package:evently/tabs/Profile/profile_screen.dart';
+import 'package:evently/update_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -73,7 +76,7 @@ class _HomeState extends State<Home> {
         foregroundColor: Color(0xffFFFFFF),
         shape: CircleBorder(
           side: BorderSide(
-            width: 5,
+            width: 5.w,
             color: Color(0xffFFFFFF),
           ),
         ),
@@ -82,7 +85,7 @@ class _HomeState extends State<Home> {
         ),
         child: Icon(
           Icons.add,
-          size: 36,
+          size: 36.sp,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

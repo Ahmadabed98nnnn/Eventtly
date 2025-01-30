@@ -1,3 +1,4 @@
+import 'package:evently/edit_or_remove.dart';
 import 'package:evently/models/category.dart';
 import 'package:evently/models/event.dart';
 import 'package:flutter/material.dart';
@@ -10,80 +11,91 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: 400,
-          height: 200,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
-              'assets/images/${event.category.imageName}.png',
-              fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => EditOrRemove(
+              event: event,
             ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Color(0xffFFFFFF),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          padding: EdgeInsets.all(8),
-          margin: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Text(
-                DateFormat('dd').format(event.date),
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xff5669FF),
-                ),
+        );
+      },
+      child: Stack(
+        children: [
+          Container(
+            width: 400,
+            height: 200,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                'assets/images/${event.category.imageName}.png',
+                fit: BoxFit.cover,
               ),
-              SizedBox(height: 4),
-              Text(
-                DateFormat('MMM').format(event.date),
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xff5669FF),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            width: 360,
-            height: 55,
+          Container(
             decoration: BoxDecoration(
               color: Color(0xffFFFFFF),
               borderRadius: BorderRadius.circular(8),
             ),
             padding: EdgeInsets.all(8),
             margin: EdgeInsets.all(8),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: Text(
-                    'Meeting for Updating The Development Method',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xff1C1C1C),
-                    ),
+                Text(
+                  DateFormat('dd').format(event.date),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xff5669FF),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite_outline_rounded),
+                SizedBox(height: 4),
+                Text(
+                  DateFormat('MMM').format(event.date),
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xff5669FF),
+                  ),
                 ),
               ],
             ),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: 360,
+              height: 55,
+              decoration: BoxDecoration(
+                color: Color(0xffFFFFFF),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: EdgeInsets.all(8),
+              margin: EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      event.description,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xff1C1C1C),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.favorite_outline_rounded),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

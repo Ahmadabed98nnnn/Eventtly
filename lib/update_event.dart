@@ -1,5 +1,8 @@
+import 'package:evently/home.dart';
+import 'package:evently/home.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/models/event_provider.dart';
+import 'package:evently/tabs/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:evently/models/category.dart';
 import 'package:evently/tabs/Home/event_item.dart';
@@ -10,33 +13,38 @@ import 'package:intl/intl.dart';
 import 'package:evently/models/firebase_services.dart';
 import 'package:provider/provider.dart';
 
-class CreateEventScreen extends StatefulWidget {
-  const CreateEventScreen({super.key});
-
+class UpdateEvent extends StatefulWidget {
+  const UpdateEvent({required this.event, super.key});
+  final Event event;
   @override
-  State<CreateEventScreen> createState() => _CreateEventScreenState();
+  State<UpdateEvent> createState() => _UpdateEventState();
 }
 
-class _CreateEventScreenState extends State<CreateEventScreen> {
-  int _currentIndex = 0;
+class _UpdateEventState extends State<UpdateEvent> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  Category selectedCategory = Category.categories.first;
+  late Category selectedCategory;
   DateTime? selectedDate;
   DateFormat dateformat = DateFormat('d/M/yyyy');
   TimeOfDay? selectedTime;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late int currentIndex;
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = int.parse(widget.event.category.id) - 1;
+  }
 
   @override
   Widget build(BuildContext context) {
-    selectedCategory = Category.categories[_currentIndex + 1];
+    selectedCategory = Category.categories[currentIndex + 1];
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             SizedBox(width: 75.w),
             Text(
-              'Create Event',
+              'Edit Event',
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w400,
@@ -69,7 +77,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 dividerColor: Colors.transparent,
                 tabAlignment: TabAlignment.start,
                 onTap: (index) {
-                  _currentIndex = index;
+                  currentIndex = index;
                   setState(() {});
                 },
                 tabs: Category.categories
@@ -77,7 +85,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     .map(
                       (category) => TabItem(
                         category: category,
-                        isSelected: _currentIndex + 1 ==
+                        isSelected: currentIndex + 1 ==
                             Category.categories.indexOf(category),
                         selectedBackground: Color(0xff5669FF),
                         selectedForeground: Color(0xffFFFFFF),
@@ -252,11 +260,11 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                         ),
                       ),
                       child: Text(
-                        "Add Event",
+                        "Update Event",
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: Colors.white, // White text color
                         ),
                       ),
                     )
@@ -282,14 +290,19 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         selectedTime!.minute,
       );
       Event event = Event(
+        id: widget.event.id,
         category: selectedCategory,
         title: titleController.text,
         description: descriptionController.text,
         date: dateTime,
       );
-      FirebaseService.addEvent(event).then((_) {
+      FirebaseService.updateEvents(event).then((_) {
         Provider.of<EventProvider>(context, listen: false).getEvents();
-        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
       }).catchError((error) {
         print(error);
       });
