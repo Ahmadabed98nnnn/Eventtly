@@ -1,3 +1,4 @@
+import 'package:evently/app_theme.dart';
 import 'package:evently/home.dart';
 import 'package:evently/models/event_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           home: const Home(),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.light,
         );
       },
     );
