@@ -1,7 +1,9 @@
+import 'package:evently/app_theme.dart';
 import 'package:evently/home.dart';
 import 'package:evently/home.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/models/event_provider.dart';
+import 'package:evently/models/settings_provider.dart';
 import 'package:evently/tabs/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:evently/models/category.dart';
@@ -37,6 +39,8 @@ class _UpdateEventState extends State<UpdateEvent> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    TextTheme textheme = Theme.of(context).textTheme;
     selectedCategory = Category.categories[currentIndex + 1];
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +52,7 @@ class _UpdateEventState extends State<UpdateEvent> {
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w400,
-                color: Color(0xff5669FF),
+                color: AppTheme.primary,
               ),
             ),
           ],
@@ -61,7 +65,9 @@ class _UpdateEventState extends State<UpdateEvent> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.r),
               child: Image.asset(
-                'assets/images/${selectedCategory.imageName}.png',
+                settingsProvider.isDark
+                    ? 'assets/images/${selectedCategory.imageName}_dark.png'
+                    : 'assets/images/${selectedCategory.imageName}.png',
                 height: 210.h,
                 fit: BoxFit.fill,
               ),
@@ -87,9 +93,11 @@ class _UpdateEventState extends State<UpdateEvent> {
                         category: category,
                         isSelected: currentIndex + 1 ==
                             Category.categories.indexOf(category),
-                        selectedBackground: Color(0xff5669FF),
-                        selectedForeground: Color(0xffFFFFFF),
-                        unSelectedForeground: Color(0xff5669FF),
+                        selectedBackground: AppTheme.primary,
+                        selectedForeground: settingsProvider.isDark
+                            ? AppTheme.black
+                            : AppTheme.white,
+                        unSelectedForeground: AppTheme.primary,
                       ),
                     )
                     .toList()),
@@ -104,10 +112,8 @@ class _UpdateEventState extends State<UpdateEvent> {
                   children: [
                     Text(
                       'Title',
-                      style: TextStyle(
-                        fontSize: 16.sp,
+                      style: textheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff1C1C1C),
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -115,10 +121,16 @@ class _UpdateEventState extends State<UpdateEvent> {
                       controller: titleController,
                       decoration: InputDecoration(
                         hintText: "We Are Going To Play Football",
+                        hintStyle: textheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                         prefixIcon: Padding(
                           padding: EdgeInsets.all(8.sp),
                           child: SvgPicture.asset(
                             'assets/images/Note_Edit.svg',
+                            color: settingsProvider.isDark
+                                ? AppTheme.white
+                                : AppTheme.grey,
                           ),
                         ),
                         border: OutlineInputBorder(
@@ -135,10 +147,8 @@ class _UpdateEventState extends State<UpdateEvent> {
                     SizedBox(height: 8.h),
                     Text(
                       'Description',
-                      style: TextStyle(
-                        fontSize: 16.sp,
+                      style: textheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff1C1C1C),
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -146,6 +156,9 @@ class _UpdateEventState extends State<UpdateEvent> {
                       controller: descriptionController,
                       decoration: InputDecoration(
                         hintText: "We Are Going To Play Football",
+                        hintStyle: textheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.r),
                         ),
@@ -166,14 +179,15 @@ class _UpdateEventState extends State<UpdateEvent> {
                           height: 24.h,
                           width: 24.w,
                           fit: BoxFit.scaleDown,
+                          color: settingsProvider.isDark
+                              ? AppTheme.white
+                              : AppTheme.black,
                         ),
                         SizedBox(width: 4.w),
                         Text(
                           'Event Date',
-                          style: TextStyle(
-                            fontSize: 16.sp,
+                          style: textheme.bodyLarge!.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff1C1C1C),
                           ),
                         ),
                         Spacer(),
@@ -198,10 +212,9 @@ class _UpdateEventState extends State<UpdateEvent> {
                             selectedDate == null
                                 ? 'Choose Date'
                                 : dateformat.format(selectedDate!),
-                            style: TextStyle(
-                              fontSize: 16.sp,
+                            style: textheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff5669FF),
+                              color: AppTheme.primary,
                             ),
                           ),
                         ),
@@ -214,14 +227,15 @@ class _UpdateEventState extends State<UpdateEvent> {
                           height: 24.h,
                           width: 24.w,
                           fit: BoxFit.scaleDown,
+                          color: settingsProvider.isDark
+                              ? AppTheme.white
+                              : AppTheme.black,
                         ),
                         SizedBox(width: 8.w),
                         Text(
                           'Event Time',
-                          style: TextStyle(
-                            fontSize: 16.sp,
+                          style: textheme.bodyLarge!.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff1C1C1C),
                           ),
                         ),
                         Spacer(),
@@ -240,10 +254,9 @@ class _UpdateEventState extends State<UpdateEvent> {
                             selectedTime == null
                                 ? 'Choose Time'
                                 : selectedTime!.format(context),
-                            style: TextStyle(
-                              fontSize: 16.sp,
+                            style: textheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff5669FF),
+                              color: AppTheme.primary,
                             ),
                           ),
                         ),
@@ -253,7 +266,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                     ElevatedButton(
                       onPressed: createEvent,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF5669FF),
+                        backgroundColor: AppTheme.primary,
                         minimumSize: Size(double.infinity, 50.h),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.r),
@@ -264,7 +277,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white, // White text color
+                          color: AppTheme.white, // White text color
                         ),
                       ),
                     )

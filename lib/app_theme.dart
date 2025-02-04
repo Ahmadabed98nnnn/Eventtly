@@ -20,7 +20,7 @@ class AppTheme {
       titleTextStyle: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w500,
-        color: black,
+        color: primary,
       ),
     ),
     scaffoldBackgroundColor: backgroundLight,
@@ -82,37 +82,138 @@ class AppTheme {
     ),
     textTheme: TextTheme(
       labelSmall: GoogleFonts.inter(
-        fontSize: 10,
+        fontSize: 10.sp,
         fontWeight: FontWeight.w400,
         color: black,
       ),
       bodySmall: GoogleFonts.inter(
-        fontSize: 12,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w400,
         color: black,
       ),
       bodyMedium: GoogleFonts.inter(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w400,
         color: black,
       ),
       bodyLarge: GoogleFonts.inter(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w500,
         color: black,
       ),
       titleLarge: GoogleFonts.inter(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w500,
         color: white,
       ),
       displayMedium: GoogleFonts.inter(
-        fontSize: 24,
+        fontSize: 24.sp,
         fontWeight: FontWeight.w700,
         color: white,
       ),
     ),
   );
 
-  static ThemeData darkTheme = ThemeData();
+  static ThemeData darkTheme = ThemeData(
+    primaryColor: primary,
+    appBarTheme: AppBarTheme(
+      backgroundColor: backgroundDark,
+      foregroundColor: primary,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: primary,
+      ),
+    ),
+    scaffoldBackgroundColor: backgroundDark,
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: grey,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: primary),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: primary),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: red),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: red),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+        foregroundColor: white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+      ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: backgroundDark,
+      elevation: 0,
+      type: BottomNavigationBarType.fixed,
+      selectedLabelStyle: GoogleFonts.inter(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w700,
+        color: white,
+      ),
+      selectedItemColor: white,
+      unselectedItemColor: white,
+      unselectedLabelStyle: GoogleFonts.inter(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w700,
+        color: white,
+      ),
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: backgroundDark,
+      foregroundColor: white,
+      shape: CircleBorder(),
+    ),
+    textTheme: TextTheme(
+      labelSmall: GoogleFonts.inter(
+        fontSize: 10.sp,
+        fontWeight: FontWeight.w400,
+        color: white,
+      ),
+      bodySmall: GoogleFonts.inter(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        color: white,
+      ),
+      bodyMedium: GoogleFonts.inter(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: white,
+      ),
+      bodyLarge: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: white,
+      ),
+      titleLarge: GoogleFonts.inter(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w500,
+        color: white,
+      ),
+      displayMedium: GoogleFonts.inter(
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w700,
+        color: white,
+      ),
+    ),
+  );
 }

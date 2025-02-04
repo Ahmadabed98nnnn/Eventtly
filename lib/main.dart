@@ -1,6 +1,7 @@
 import 'package:evently/app_theme.dart';
 import 'package:evently/home.dart';
 import 'package:evently/models/event_provider.dart';
+import 'package:evently/models/settings_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,8 +11,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => EventProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => EventProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SettingsProvider(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -22,6 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return ScreenUtilInit(
       designSize: Size(393, 841),
       minTextAdapt: true,
@@ -31,7 +40,7 @@ class MyApp extends StatelessWidget {
           home: const Home(),
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: ThemeMode.light,
+          themeMode: settingsProvider.themeMode,
         );
       },
     );

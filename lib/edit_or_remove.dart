@@ -1,5 +1,7 @@
+import 'package:evently/app_theme.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/models/event_provider.dart';
+import 'package:evently/models/settings_provider.dart';
 import 'package:evently/update_event.dart';
 import 'package:flutter/material.dart';
 import 'package:evently/models/category.dart';
@@ -16,6 +18,8 @@ class EditOrRemove extends StatelessWidget {
   final Event event;
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -23,10 +27,8 @@ class EditOrRemove extends StatelessWidget {
             SizedBox(width: 60.w),
             Text(
               'Event Details',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w400,
-                color: Color(0xff5669FF),
+              style: textTheme.titleLarge!.copyWith(
+                color: AppTheme.primary,
               ),
             ),
             Spacer(),
@@ -64,7 +66,9 @@ class EditOrRemove extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.r),
               child: Image.asset(
-                'assets/images/${event.category.imageName}.png',
+                settingsProvider.isDark
+                    ? 'assets/images/${event.category.imageName}_dark.png'
+                    : 'assets/images/${event.category.imageName}.png',
                 height: 210.h,
                 fit: BoxFit.fill,
               ),
@@ -74,10 +78,9 @@ class EditOrRemove extends StatelessWidget {
             padding: EdgeInsets.only(left: 16.w),
             child: Text(
               event.title,
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff5669FF),
+              style: textTheme.displayMedium!.copyWith(
+                color: AppTheme.primary,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -94,7 +97,7 @@ class EditOrRemove extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1.w,
-                          color: Color(0xff5669FF),
+                          color: AppTheme.primary,
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(16.r),
@@ -107,7 +110,7 @@ class EditOrRemove extends StatelessWidget {
                             child: Container(
                               padding: EdgeInsets.all(12.sp),
                               decoration: BoxDecoration(
-                                color: Color(0xff5669FF),
+                                color: AppTheme.primary,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(8.r),
                                 ),
@@ -116,7 +119,9 @@ class EditOrRemove extends StatelessWidget {
                               height: 48.h,
                               child: SvgPicture.asset(
                                 'assets/images/Calendar_Days.svg',
-                                color: Color(0xffFFFFFF),
+                                color: settingsProvider.isDark
+                                    ? AppTheme.black
+                                    : AppTheme.white,
                               ),
                             ),
                           ),
@@ -126,19 +131,13 @@ class EditOrRemove extends StatelessWidget {
                               SizedBox(height: 6.h),
                               Text(
                                 DateFormat('dd MMMM yyyy').format(event.date),
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff5669FF),
+                                style: textTheme.bodyLarge!.copyWith(
+                                  color: AppTheme.primary,
                                 ),
                               ),
                               Text(
                                 DateFormat('hh:mm a').format(event.date),
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff1C1C1C),
-                                ),
+                                style: textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -152,7 +151,7 @@ class EditOrRemove extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1.w,
-                          color: Color(0xff5669FF),
+                          color: AppTheme.primary,
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(16.r),
@@ -165,7 +164,7 @@ class EditOrRemove extends StatelessWidget {
                             child: Container(
                               padding: EdgeInsets.all(12.sp),
                               decoration: BoxDecoration(
-                                color: Color(0xff5669FF),
+                                color: AppTheme.primary,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(8.r),
                                 ),
@@ -174,22 +173,22 @@ class EditOrRemove extends StatelessWidget {
                               height: 48.h,
                               child: SvgPicture.asset(
                                 'assets/images/gps.svg',
-                                color: Color(0xffFFFFFF),
+                                color: settingsProvider.isDark
+                                    ? AppTheme.black
+                                    : AppTheme.white,
                               ),
                             ),
                           ),
                           Text(
                             'Cairo , Egypt',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xff5669FF),
+                            style: textTheme.bodyLarge!.copyWith(
+                              color: AppTheme.primary,
                             ),
                           ),
                           Spacer(),
                           SvgPicture.asset(
                             'assets/images/Next.svg',
-                            color: Color(0xff5669FF),
+                            color: AppTheme.primary,
                           ),
                           SizedBox(width: 6.w),
                         ],
@@ -202,7 +201,7 @@ class EditOrRemove extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1.w,
-                          color: Color(0xff5669FF),
+                          color: AppTheme.primary,
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(16.r),
@@ -221,20 +220,12 @@ class EditOrRemove extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Text(
                       'Description',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff1C1C1C),
-                      ),
+                      style: textTheme.bodyLarge,
                     ),
                     SizedBox(height: 16.h),
                     Text(
                       event.description,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff1C1C1C),
-                      ),
+                      style: textTheme.bodyLarge,
                     ),
                   ],
                 ),

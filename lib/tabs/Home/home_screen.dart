@@ -1,7 +1,9 @@
+import 'package:evently/app_theme.dart';
 import 'package:evently/models/category.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/models/event_provider.dart';
 import 'package:evently/models/firebase_services.dart';
+import 'package:evently/models/settings_provider.dart';
 import 'package:evently/tabs/Home/event_item.dart';
 import 'package:evently/tabs/Home/tab_item.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +26,17 @@ class _HomeScreenState extends State<HomeScreen> {
     if (eventProvider.event.isEmpty) {
       eventProvider.getEvents();
     }
-
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
         Container(
           height: 170.h,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Color(0xff5669FF),
+            color: settingsProvider.isDark
+                ? AppTheme.backgroundDark
+                : AppTheme.primary,
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(24.r),
             ),
@@ -45,20 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(
                     'Welcome Back ✨',
-                    style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xffFFFFFF)),
+                    style: textTheme.bodyMedium,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(
                     'John Safwat',
-                    style: TextStyle(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xffFFFFFF)),
+                    style: textTheme.displayMedium,
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -84,9 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             category: category,
                             isSelected: _currentIndex ==
                                 Category.categories.indexOf(category),
-                            selectedBackground: Color(0xffFFFFFF),
-                            selectedForeground: Color(0xff5669FF),
-                            unSelectedForeground: Color(0xffFFFFFF),
+                            selectedBackground: settingsProvider.isDark
+                                ? AppTheme.primary
+                                : Color(0xffFFFFFF),
+                            selectedForeground: settingsProvider.isDark
+                                ? AppTheme.white
+                                : Color(0xff5669FF),
+                            unSelectedForeground: settingsProvider.isDark
+                                ? AppTheme.primary
+                                : Color(0xffFFFFFF),
                           ),
                         )
                         .toList(),

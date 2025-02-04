@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
         ProfileHeader(),
         Spacer(),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 55),
@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 105.h),
+        SizedBox(height: 110.h),
       ],
     );
   }

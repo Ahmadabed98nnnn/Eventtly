@@ -1,5 +1,7 @@
+import 'package:evently/app_theme.dart';
 import 'package:evently/create_event_screen.dart';
 import 'package:evently/edit_or_remove.dart';
+import 'package:evently/models/settings_provider.dart';
 import 'package:evently/nav_bar_icon.dart';
 import 'package:evently/tabs/Home/home_screen.dart';
 import 'package:evently/tabs/Love/love_screen.dart';
@@ -8,6 +10,7 @@ import 'package:evently/tabs/Profile/profile_screen.dart';
 import 'package:evently/update_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,13 +30,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBody: true,
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5,
         shape: CircularNotchedRectangle(),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: Color(0xff5669FF),
+        color: AppTheme.primary,
         padding: EdgeInsets.zero,
         child: BottomNavigationBar(
           elevation: 0,
@@ -42,10 +46,10 @@ class _HomeState extends State<Home> {
             _currentIndex = index;
             setState(() {});
           },
-          backgroundColor: Color(0xff5669FF),
+          backgroundColor: Theme.of(context).bottomAppBarTheme.color,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white,
+          selectedItemColor: AppTheme.white,
+          unselectedItemColor: AppTheme.white,
           items: [
             BottomNavigationBarItem(
               icon: NavBarIcon(imageName: 'Home'),
@@ -72,8 +76,10 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 0,
-        backgroundColor: Color(0xff5669FF),
-        foregroundColor: Color(0xffFFFFFF),
+        backgroundColor:
+            Theme.of(context).floatingActionButtonTheme.backgroundColor,
+        foregroundColor:
+            Theme.of(context).floatingActionButtonTheme.foregroundColor,
         shape: CircleBorder(
           side: BorderSide(
             width: 5.w,

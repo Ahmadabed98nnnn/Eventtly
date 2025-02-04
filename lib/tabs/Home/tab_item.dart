@@ -17,6 +17,7 @@ class TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
@@ -36,9 +37,7 @@ class TabItem extends StatelessWidget {
           SizedBox(width: 8),
           Text(
             category.name,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            style: textTheme.bodyLarge!.copyWith(
               color: isSelected ? selectedForeground : unSelectedForeground,
             ),
           ),
