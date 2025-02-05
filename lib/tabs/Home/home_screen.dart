@@ -1,4 +1,5 @@
 import 'package:evently/app_theme.dart';
+import 'package:evently/flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:evently/models/category.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/models/event_provider.dart';
@@ -49,14 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(
-                    'Welcome Back ✨',
-                    style: textTheme.bodyMedium,
+                    AppLocalizations.of(context)!.welcome_back,
+                    style:
+                        textTheme.bodyMedium!.copyWith(color: AppTheme.white),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(
-                    'John Safwat',
+                    AppLocalizations.of(context)!.john_safwat,
                     style: textTheme.displayMedium,
                   ),
                 ),
